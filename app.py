@@ -317,7 +317,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ── Trend chart ─────────────────────────────────────────────────────────────────
 st.markdown('<div class="card-header">Monthly Invested Volume — 12 month trend (€K) · dashed line = target trajectory</div>', unsafe_allow_html=True)
 
-bar_colors = [C["blue"] if i == len(trend_data)-1 else C["blue"]+"88" for i in range(len(trend_data))]
+bar_colors = [C["blue"] if i == len(trend_data)-1 else "rgba(80,158,227,0.4)" for i in range(len(trend_data))]
 
 fig_trend = go.Figure()
 fig_trend.add_trace(go.Bar(
