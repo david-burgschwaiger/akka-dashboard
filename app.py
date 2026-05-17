@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 
 # ── Page config ────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="akka · Growth Overview",
+    page_title="akka · Company Performance",
     page_icon="▦",
     layout="wide",
     initial_sidebar_state="expanded",
