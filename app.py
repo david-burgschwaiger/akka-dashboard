@@ -241,7 +241,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.radio("nav", [
-        "Growth Overview", "Retention", "Attribution",
+        "Company Performance", "Retention", "Attribution",
         "Member Behaviour", "Deal Performance",
     ], index=0, label_visibility="collapsed")
     st.markdown("""
