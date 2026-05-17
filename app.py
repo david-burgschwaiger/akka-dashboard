@@ -13,80 +13,131 @@ st.set_page_config(
 # ── Colours ────────────────────────────────────────────────────────────────────
 C = dict(
     blue="#509ee3", green="#67c15e", red="#f86f74",
-    yellow="#f5c842", purple="#9b59b6", teal="#1abc9c",
+    yellow="#e6a817", purple="#9b59b6", teal="#1abc9c",
     orange="#f39c12", muted="#64748b", label="#94a3b8",
     border="#e2e8f0", text="#2c3e50",
 )
 
 # ── CSS ────────────────────────────────────────────────────────────────────────
-st.markdown("""
+st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700;800&display=swap');
-html, body, [class*="css"] { font-family: 'DM Sans', system-ui, sans-serif; }
+html, body, [class*="css"] {{ font-family: 'DM Sans', system-ui, sans-serif; }}
 
-[data-testid="stSidebar"] { background-color: #2d2d3b !important; }
-[data-testid="stSidebar"] * { color: rgba(255,255,255,0.75) !important; }
+[data-testid="stSidebar"] {{ background-color: #2d2d3b !important; }}
+[data-testid="stSidebar"] * {{ color: rgba(255,255,255,0.75) !important; }}
 
-.kpi-section-header {
-    font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.6px; color: #64748b;
-    padding: 8px 0 6px; border-bottom: 2px solid #e2e8f0;
-    margin-bottom: 8px;
-}
-.kpi-label-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 2px;
-}
-.kpi-lbl { font-size: 12px; color: #2c3e50; font-weight: 500; }
-.kpi-val { font-size: 13px; font-weight: 700; color: #2c3e50; }
-.kpi-bench { font-size: 10px; color: #94a3b8; margin-top: 1px; margin-bottom: 8px; }
-.kpi-delta-green { font-size: 10px; font-weight: 700; color: #16a34a;
-    background: #dcfce7; padding: 1px 6px; border-radius: 4px; }
-.kpi-delta-red { font-size: 10px; font-weight: 700; color: #dc2626;
-    background: #fee2e2; padding: 1px 6px; border-radius: 4px; }
-.kpi-delta-grey { font-size: 10px; font-weight: 700; color: #64748b;
-    background: #f1f5f9; padding: 1px 6px; border-radius: 4px; }
+/* Section divider headers */
+.section-block {{
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid {C['border']};
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}}
+.section-block .section-dot {{
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}}
+.section-block .section-title {{
+    font-size: 13px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1px; color: {C['text']};
+}}
+.section-block .section-sub {{
+    font-size: 11px; color: {C['muted']}; margin-left: 4px;
+}}
 
-.ns-card {
-    background: white; border: 1px solid #e2e8f0; border-top: 3px solid #509ee3;
-    border-radius: 8px; padding: 14px 16px;
+/* KPI card panels */
+.kpi-panel {{
+    border-radius: 8px;
+    border: 1px solid {C['border']};
+    border-left-width: 4px;
+    background: white;
+    padding: 0;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-.ns-value-large {
-    font-size: 36px; font-weight: 800; color: #509ee3;
-    letter-spacing: -1px; line-height: 1; margin: 6px 0;
-}
-.ns-value-med {
-    font-size: 26px; font-weight: 300; color: #2c3e50;
-    letter-spacing: -0.5px; margin: 6px 0;
-}
-.ns-label { font-size: 10px; font-weight: 700; color: #64748b;
-    text-transform: uppercase; letter-spacing: 0.6px; }
-.ns-sub { font-size: 10px; color: #94a3b8; margin-top: 4px; }
-.pill-green { display:inline-block; font-size:10px; font-weight:700;
-    color:#16a34a; background:#dcfce7; padding:2px 8px; border-radius:4px; }
-.pill-grey { display:inline-block; font-size:10px; font-weight:700;
-    color:#64748b; background:#f1f5f9; padding:2px 8px; border-radius:4px; }
+    margin-bottom: 4px;
+}}
+.kpi-panel-header {{
+    font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.8px; padding: 10px 14px 8px;
+    border-bottom: 1px solid {C['border']};
+    background: #f8fafc; border-radius: 6px 6px 0 0;
+}}
+.kpi-panel-body {{ padding: 6px 14px 10px; }}
 
-.alert-box {
-    background:#fffbeb; border:1px solid #f5c842; border-left:4px solid #f5c842;
-    border-radius:6px; padding:10px 14px; font-size:11px; color:#92400e; margin-bottom:8px;
-}
-.section-label {
-    font-size:10px; font-weight:700; text-transform:uppercase;
-    letter-spacing:0.8px; color:#94a3b8; margin: 16px 0 8px;
-}
-.footer-note {
-    font-size:10px; color:#94a3b8; text-align:right; line-height:1.6; padding:12px 0;
-}
-.decomp-grid {
+/* KPI rows */
+.kpi-label-row {{
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 3px; margin-top: 10px;
+}}
+.kpi-lbl {{ font-size: 12px; color: {C['muted']}; font-weight: 500; }}
+.kpi-val {{ font-size: 13px; font-weight: 700; color: {C['text']}; }}
+
+.kpi-delta-green {{ font-size: 10px; font-weight: 700; color: #16a34a;
+    background: #dcfce7; padding: 1px 7px; border-radius: 4px; margin-left: 6px; }}
+.kpi-delta-red {{ font-size: 10px; font-weight: 700; color: #dc2626;
+    background: #fee2e2; padding: 1px 7px; border-radius: 4px; margin-left: 6px; }}
+.kpi-delta-yellow {{ font-size: 10px; font-weight: 700; color: #92400e;
+    background: #fef9c3; padding: 1px 7px; border-radius: 4px; margin-left: 6px; }}
+.kpi-delta-grey {{ font-size: 10px; font-weight: 700; color: #64748b;
+    background: #f1f5f9; padding: 1px 7px; border-radius: 4px; margin-left: 6px; }}
+
+/* Progress bar track */
+.progress-track {{
+    height: 5px; background: {C['border']}; border-radius: 3px;
+    margin: 3px 0 10px; overflow: hidden;
+}}
+.progress-fill {{
+    height: 100%; border-radius: 3px;
+}}
+
+/* North Star cards */
+.ns-card {{
+    background: white; border: 1px solid {C['border']}; border-top: 3px solid {C['blue']};
+    border-radius: 8px; padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); height: 100%;
+}}
+.ns-value-large {{
+    font-size: 36px; font-weight: 800; color: {C['blue']};
+    letter-spacing: -1px; line-height: 1; margin: 6px 0;
+}}
+.ns-value-med {{
+    font-size: 26px; font-weight: 300; color: {C['text']};
+    letter-spacing: -0.5px; margin: 6px 0;
+}}
+.ns-label {{ font-size: 10px; font-weight: 700; color: {C['muted']};
+    text-transform: uppercase; letter-spacing: 0.6px; }}
+.ns-sub {{ font-size: 10px; color: {C['label']}; margin-top: 4px; }}
+.pill-green {{ display:inline-block; font-size:10px; font-weight:700;
+    color:#16a34a; background:#dcfce7; padding:2px 8px; border-radius:4px; }}
+.pill-grey {{ display:inline-block; font-size:10px; font-weight:700;
+    color:#64748b; background:#f1f5f9; padding:2px 8px; border-radius:4px; }}
+.decomp-grid {{
     display:grid; grid-template-columns:1fr auto 1fr auto 1fr;
     gap:4px; align-items:center; margin-top:12px;
-    border-top:1px solid #e2e8f0; padding-top:12px;
-}
-.decomp-val { font-size:15px; font-weight:700; color:#2c3e50; text-align:center; }
-.decomp-lbl { font-size:9px; color:#94a3b8; text-align:center; margin-top:2px; line-height:1.3; }
-.decomp-op  { font-size:18px; font-weight:700; color:#94a3b8; text-align:center; }
+    border-top:1px solid {C['border']}; padding-top:12px;
+}}
+.decomp-val {{ font-size:15px; font-weight:700; color:{C['text']}; text-align:center; }}
+.decomp-lbl {{ font-size:9px; color:{C['label']}; text-align:center; margin-top:2px; line-height:1.3; }}
+.decomp-op {{ font-size:18px; font-weight:700; color:{C['label']}; text-align:center; }}
+
+.alert-box {{
+    background:#fffbeb; border:1px solid #f5c842; border-left:4px solid #f5c842;
+    border-radius:6px; padding:10px 14px; font-size:11px; color:#92400e; margin-bottom:8px;
+}}
+
+/* Glossary */
+.glossary-grid {{
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px 24px; margin-top: 8px;
+}}
+.glossary-item {{ padding: 8px 0; border-bottom: 1px solid {C['border']}; }}
+.glossary-term {{ font-size: 12px; font-weight: 700; color: {C['text']}; }}
+.glossary-def {{ font-size: 11px; color: {C['muted']}; margin-top: 2px; line-height: 1.4; }}
+
+.footer-note {{
+    font-size:10px; color:{C['label']}; text-align:right; line-height:1.6; padding:12px 0;
+}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -100,63 +151,90 @@ trend_data = pd.DataFrame({
 channels = [
     {"Channel": "Organic / SEO",   "New Members": 92,  "Share": 31, "CAC": "€80",  "MoM": "+5%",  "LTV/CAC": "30x", "Rec": "Invest more",    "rec": "green"},
     {"Channel": "Referral",        "New Members": 72,  "Share": 24, "CAC": "€60",  "MoM": "+12%", "LTV/CAC": "40x", "Rec": "Scale urgently", "rec": "green"},
-    {"Channel": "Influencer/Club", "New Members": 51,  "Share": 17, "CAC": "€220", "MoM": "→",    "LTV/CAC": "11x", "Rec": "Monitor ROI",    "rec": "orange"},
+    {"Channel": "Influencer/Club", "New Members": 51,  "Share": 17, "CAC": "€220", "MoM": "stable","LTV/CAC": "11x", "Rec": "Monitor ROI",    "rec": "orange"},
     {"Channel": "Paid Social",     "New Members": 83,  "Share": 28, "CAC": "€380", "MoM": "+8%",  "LTV/CAC": "6x",  "Rec": "Review spend",   "rec": "red"},
 ]
 
-# (label, value, bar_pct, delta, bench)
+# (label, value, bar_pct, bar_color, delta, delta_style)
 acq_kpis = [
-    ("New members / month",      "298",   60, "+12% MoM · +38% YoY", "Target: 400/month"),
-    ("Lead to member conversion","4.2%",  42, "+50% MoM",            "Within fintech SaaS benchmark (3-5%)"),
-    ("CAC (blended)",            "€273",  55, "directional",         "Derived: €39/mo x 7mo payback. Attribution ~50% - estimate only."),
-    ("Payback period",           "7 mo",  70, "7mo",                 "Well within SaaS benchmark (<12 months)"),
-    ("LTV / CAC ratio",          "8.8x",  88, "strong",              "Excellent. Benchmark: >3x good, >5x great"),
+    ("New members / month",       "298",   60, C["red"],    "+12% MoM · +38% YoY", "green"),
+    ("Lead to member conversion", "4.2%",  42, C["red"],    "+50% MoM",             "green"),
+    ("CAC (blended)",             "€273",  55, C["red"],    "directional",          "grey"),
+    ("Payback period",            "7 mo",  70, C["green"],  "7 months",             "green"),
+    ("LTV / CAC ratio",           "8.8x",  88, C["green"],  "strong",               "green"),
 ]
 ret_kpis = [
-    ("Renewal rate - year 1",        "61%",  61, "+36pp YoY", "At lower end of benchmark (60-70%). Trend is strong."),
-    ("Retention rate - year 2",      "82%",  82, "strong",    "Above benchmark (~75%). Year 2 cohorts are loyal."),
-    ("Monthly churn",                "3.2%", 64, "watch",     "Above SaaS benchmark (<2%). Key area to address."),
-    ("NPS",                          "51",   51, "stable",    "Above fintech avg (30-40). Target: >60."),
-    ("Free lifetime members (3yr+)", "360",  12, "growing",   "12% of base. Track investing rate for this cohort separately."),
+    ("Renewal rate — year 1",         "61%",  61, C["yellow"], "+36pp YoY",  "green"),
+    ("Retention rate — year 2",       "82%",  82, C["green"],  "strong",     "green"),
+    ("Monthly churn",                 "3.2%", 64, C["red"],    "watch",      "red"),
+    ("NPS",                           "51",   51, C["yellow"], "stable",     "yellow"),
+    ("Free lifetime members (3yr+)",  "360",  12, C["purple"], "growing",    "green"),
 ]
 eng_kpis = [
-    ("MAU",                           "1,920", 64, "+8% MoM · +42% YoY", "No automated tracking yet. Manual estimate."),
-    ("DAU / MAU ratio",               "22%",   44, "baseline",            "Within consumer app benchmark (20-25%)."),
-    ("% members investing (30d)",     "56%",   56, "+4pp MoM",            "Target: 70%"),
-    ("Avg sessions / member / month", "6.4",   55, "+5% MoM",             "Target: 8 sessions/month"),
-    ("Portfolio view freq / member",  "3.1x",  40, "stable",              "Leading indicator of retention. Target: 5x"),
+    ("MAU",                           "1,920", 64, C["green"], "+8% MoM · +42% YoY", "green"),
+    ("DAU / MAU ratio",               "22%",   44, C["green"], "on track",            "green"),
+    ("% members investing (30d)",     "56%",   56, C["green"], "+4pp MoM",            "green"),
+    ("Avg sessions / member / month", "6.4",   55, C["green"], "+5% MoM",             "green"),
+    ("Portfolio view freq / member",  "3.1x",  40, C["teal"],  "stable",              "yellow"),
 ]
 deal_kpis = [
-    ("Avg ticket size",                 "€862", 58, "+9% MoM · +22% YoY", "Target: €1,000"),
-    ("Avg investments / member / year", "6.8",  68, "7 target",            "Thomas's model assumption: 7x/year. Almost there."),
-    ("% members at max allocation",     "22%",  22, "+3pp MoM",            "Proxy for deal conviction. Target: 40%."),
-    ("Deal fill rate",                  "94%",  94, "high",                "Strong. Indicates high member trust in curation."),
-    ("Deals funded YTD",                "19",   40, "on track",            "~1 deal/week target. On track."),
+    ("Avg ticket size",                 "€862", 58, C["purple"], "+9% MoM · +22% YoY", "green"),
+    ("Avg investments / member / year", "6.8",  68, C["purple"], "near target",         "yellow"),
+    ("% members at max allocation",     "22%",  22, C["purple"], "+3pp MoM",            "green"),
+    ("Deal fill rate",                  "94%",  94, C["green"],  "strong",              "green"),
+    ("Deals funded YTD",                "19",   40, C["purple"], "on track",            "green"),
+]
+
+glossary = [
+    ("Monthly Invested Volume", "Total euros deployed by members into deals in a given month. The North Star metric."),
+    ("Investing Members", "Members who have made at least one investment in the last 30 days."),
+    ("ARR", "Annualised Recurring Revenue. Membership fee revenue x 12."),
+    ("NPS", "Net Promoter Score. Members rating 9-10 minus those rating 0-6. Scale: -100 to +100."),
+    ("CAC", "Customer Acquisition Cost. Total marketing spend divided by new members acquired. ~50% attribution currently."),
+    ("LTV", "Lifetime Value. Average revenue per member over their full membership duration."),
+    ("LTV / CAC", "Ratio of lifetime value to acquisition cost. >3x = good, >5x = great."),
+    ("Payback period", "Months of membership fees required to recover the CAC. Target: <12 months."),
+    ("Renewal rate — year 1", "Share of year-1 members who renew for year 2. Benchmark: 60-70%."),
+    ("Retention rate — year 2", "Share of year-2 members who remain active. Benchmark: ~75%."),
+    ("Monthly churn", "Share of active members who cancel each month. Target: <2%."),
+    ("MAU", "Monthly Active Users. Members who logged in at least once in the last 30 days."),
+    ("DAU / MAU", "Daily active users divided by monthly active users. Measures engagement stickiness. Benchmark: 20-25%."),
+    ("Deal fill rate", "Share of each deal's target that gets funded by members. High fill rate = strong member conviction."),
+    ("Free lifetime members", "Members who have been with akka 3+ years and receive free membership. ~12% of base."),
+    ("Portfolio view frequency", "Average number of times a member views their portfolio per month. Leading retention indicator."),
 ]
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
-def delta_class(d):
-    dl = d.lower()
-    if any(x in dl for x in ["strong", "high", "on track", "growing", "7mo"]):
-        return "kpi-delta-green"
-    if "watch" in dl:
-        return "kpi-delta-red"
-    if d.startswith("+"):
-        return "kpi-delta-green"
-    return "kpi-delta-grey"
+def section_header(title, subtitle, dot_color):
+    st.markdown(f"""
+    <div class="section-block">
+      <div class="section-dot" style="background:{dot_color};"></div>
+      <span class="section-title">{title}</span>
+      <span class="section-sub">{subtitle}</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 def render_kpis(kpis):
-    for label, value, pct, delta, bench in kpis:
-        dc = delta_class(delta)
+    for label, value, pct, bar_color, delta, d_style in kpis:
         st.markdown(
             f'<div class="kpi-label-row">'
             f'<span class="kpi-lbl">{label}</span>'
-            f'<span class="kpi-val">{value} &nbsp;<span class="{dc}">{delta}</span></span>'
+            f'<span class="kpi-val">{value}<span class="kpi-delta-{d_style}">{delta}</span></span>'
+            f'</div>'
+            f'<div class="progress-track">'
+            f'<div class="progress-fill" style="width:{min(pct,100)}%;background:{bar_color};"></div>'
             f'</div>',
             unsafe_allow_html=True,
         )
-        st.progress(min(pct, 100))
-        st.markdown(f'<div class="kpi-bench">{bench}</div>', unsafe_allow_html=True)
+
+def kpi_panel(title, header_color, kpis, border_color):
+    st.markdown(f"""
+    <div class="kpi-panel" style="border-left-color:{border_color};">
+      <div class="kpi-panel-header" style="color:{border_color};">{title}</div>
+      <div class="kpi-panel-body">
+    """, unsafe_allow_html=True)
+    render_kpis(kpis)
+    st.markdown("</div></div>", unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -176,12 +254,10 @@ with st.sidebar:
       Dashboards
     </div>
     """, unsafe_allow_html=True)
-
     st.radio("nav", [
         "Growth Overview", "Retention", "Attribution",
         "Member Behaviour", "Deal Performance",
     ], index=0, label_visibility="collapsed")
-
     st.markdown("""
     <div style="margin-top:24px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);
                 font-size:9px;color:rgba(255,255,255,0.25);line-height:1.5;">
@@ -199,23 +275,23 @@ with f5: cmp    = st.radio("Cmp", ["MoM","YoY"], horizontal=True, label_visibili
 
 st.divider()
 
-# ── Header ─────────────────────────────────────────────────────────────────────
+# ── Page header ────────────────────────────────────────────────────────────────
 st.markdown(f"""
 <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px;">
-  <span style="font-size:20px;font-weight:700;color:{C['text']};">Growth Overview</span>
+  <span style="font-size:20px;font-weight:800;color:{C['text']};">Growth Overview</span>
   <span style="font-size:11px;color:{C['label']};">Series A prep · {period} · {market}</span>
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
 <div class="alert-box">
-  Marketing attribution at <strong>~50%</strong>. CAC figures are directional only.
+  ⚠️ Marketing attribution at <strong>~50%</strong>. CAC figures are directional only.
   Fixing attribution is <strong>priority #1</strong> for the incoming data function.
 </div>
 """, unsafe_allow_html=True)
 
 # ── North Star ─────────────────────────────────────────────────────────────────
-st.markdown('<div class="section-label">North Star</div>', unsafe_allow_html=True)
+section_header("North Star", "Core business metrics", C["blue"])
 
 ns1, ns2, ns3, ns4 = st.columns([2.2, 1, 1, 1])
 
@@ -253,16 +329,13 @@ for col, title, value, delta, sub, is_up in [
         </div>
         """, unsafe_allow_html=True)
 
-st.markdown("<br>", unsafe_allow_html=True)
-
 # ── Trend chart ────────────────────────────────────────────────────────────────
-st.markdown("**Monthly Invested Volume — 12 month trend (€K)**  ·  *dashed = target trajectory*")
+section_header("Monthly Invested Volume", "12-month trend (€K) · dashed = target trajectory", C["blue"])
 
 bar_colors = [
     "rgba(80,158,227,1)" if i == len(trend_data) - 1 else "rgba(80,158,227,0.4)"
     for i in range(len(trend_data))
 ]
-
 fig = go.Figure()
 fig.add_trace(go.Bar(
     x=trend_data["month"], y=trend_data["volume"],
@@ -289,33 +362,23 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
-# ── 4 KPI panels ───────────────────────────────────────────────────────────────
-st.markdown('<div class="section-label">Acquisition · Retention · Product and Engagement · Deal Quality</div>', unsafe_allow_html=True)
+# ── KPI panels ─────────────────────────────────────────────────────────────────
+section_header("KPI Dashboard", "Acquisition · Retention · Engagement · Deal Quality", C["text"])
 
 k1, k2 = st.columns(2)
 k3, k4 = st.columns(2)
 
 with k1:
-    st.markdown('<div class="kpi-section-header">Acquisition KPIs</div>', unsafe_allow_html=True)
-    render_kpis(acq_kpis)
-
+    kpi_panel("Acquisition KPIs", C["red"], acq_kpis, C["red"])
 with k2:
-    st.markdown('<div class="kpi-section-header">Retention KPIs</div>', unsafe_allow_html=True)
-    render_kpis(ret_kpis)
-
+    kpi_panel("Retention KPIs", C["yellow"], ret_kpis, C["yellow"])
 with k3:
-    st.markdown('<div class="kpi-section-header">Product and Engagement</div>', unsafe_allow_html=True)
-    render_kpis(eng_kpis)
-
+    kpi_panel("Product & Engagement", C["green"], eng_kpis, C["green"])
 with k4:
-    st.markdown('<div class="kpi-section-header">Deal Quality and Trust</div>', unsafe_allow_html=True)
-    render_kpis(deal_kpis)
-
-st.markdown("<br>", unsafe_allow_html=True)
+    kpi_panel("Deal Quality & Trust", C["purple"], deal_kpis, C["purple"])
 
 # ── Attribution table ──────────────────────────────────────────────────────────
-st.markdown('<div class="section-label">Marketing Attribution</div>', unsafe_allow_html=True)
-st.markdown("**CAC and volume by channel** · directional only (~50% attributed) · blended CAC = €273")
+section_header("Marketing Attribution", "CAC & volume by channel · directional only (~50% attributed) · blended CAC = €273", C["teal"])
 
 rec_fill = {"green": "#dcfce7", "orange": "#fff7ed", "red": "#fee2e2"}
 rec_font = {"green": "#16a34a", "orange": "#c2410c", "red": "#dc2626"}
@@ -331,13 +394,13 @@ fig_tbl = go.Figure(data=[go.Table(
     ),
     cells=dict(
         values=[
-            [r["Channel"]      for r in channels],
-            [r["New Members"]  for r in channels],
-            [f'{r["Share"]}%'  for r in channels],
-            [r["CAC"]          for r in channels],
-            [r["MoM"]          for r in channels],
-            [r["LTV/CAC"]      for r in channels],
-            [r["Rec"]          for r in channels],
+            [r["Channel"]     for r in channels],
+            [r["New Members"] for r in channels],
+            [f'{r["Share"]}%' for r in channels],
+            [r["CAC"]         for r in channels],
+            [r["MoM"]         for r in channels],
+            [r["LTV/CAC"]     for r in channels],
+            [r["Rec"]         for r in channels],
         ],
         fill_color=[
             ["white"] * 4,
@@ -369,6 +432,22 @@ fig_tbl.update_layout(
     paper_bgcolor="white",
 )
 st.plotly_chart(fig_tbl, use_container_width=True, config={"displayModeBar": False})
+
+# ── KPI Glossary ───────────────────────────────────────────────────────────────
+section_header("KPI Glossary", "Definitions for all metrics shown in this dashboard", C["muted"])
+
+half = len(glossary) // 2 + len(glossary) % 2
+col_a, col_b = st.columns(2)
+
+for col, items in [(col_a, glossary[:half]), (col_b, glossary[half:])]:
+    with col:
+        for term, definition in items:
+            st.markdown(f"""
+            <div class="glossary-item">
+              <div class="glossary-term">{term}</div>
+              <div class="glossary-def">{definition}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 # ── Footer ─────────────────────────────────────────────────────────────────────
 st.markdown("""
