@@ -264,7 +264,7 @@ st.divider()
 # ── Page header ────────────────────────────────────────────────────────────────
 st.markdown(f"""
 <div style="font-size:22px;font-weight:800;color:{C['text']};margin-bottom:16px;">
-  Growth Overview
+  Company Performance
 </div>
 """, unsafe_allow_html=True)
 
