@@ -357,44 +357,32 @@ k1, k2 = st.columns(2)
 k3, k4 = st.columns(2)
 
 with k1:
-    st.markdown(f"""
-    <div class="metric-card accent-red" style="padding:0;">
+    st.markdown(f"""<div class="metric-card accent-red" style="padding:0;">
       <div class="card-header" style="border-top:none;">
         <span class="dot" style="background:{C['red']};margin-right:4px;"></span>Acquisition KPIs
-      </div>
-      <div style="padding:4px 16px 8px;">{kpi_block(acq_kpis)}</div>
-    </div>
-    """, unsafe_allow_html=True)
+      </div></div>""", unsafe_allow_html=True)
+    st.markdown(f'<div style="padding:4px 16px 8px;">{kpi_block(acq_kpis)}</div>', unsafe_allow_html=True)
 
 with k2:
-    st.markdown(f"""
-    <div class="metric-card accent-yellow" style="padding:0;">
+    st.markdown(f"""<div class="metric-card accent-yellow" style="padding:0;">
       <div class="card-header" style="border-top:none;">
         <span class="dot" style="background:{C['yellow']};margin-right:4px;"></span>Retention KPIs
-      </div>
-      <div style="padding:4px 16px 8px;">{kpi_block(ret_kpis)}</div>
-    </div>
-    """, unsafe_allow_html=True)
+      </div></div>""", unsafe_allow_html=True)
+    st.markdown(f'<div style="padding:4px 16px 8px;">{kpi_block(ret_kpis)}</div>', unsafe_allow_html=True)
 
 with k3:
-    st.markdown(f"""
-    <div class="metric-card accent-green" style="padding:0;">
+    st.markdown(f"""<div class="metric-card accent-green" style="padding:0;">
       <div class="card-header" style="border-top:none;">
         <span class="dot" style="background:{C['green']};margin-right:4px;"></span>Product &amp; Engagement
-      </div>
-      <div style="padding:4px 16px 8px;">{kpi_block(eng_kpis)}</div>
-    </div>
-    """, unsafe_allow_html=True)
+      </div></div>""", unsafe_allow_html=True)
+    st.markdown(f'<div style="padding:4px 16px 8px;">{kpi_block(eng_kpis)}</div>', unsafe_allow_html=True)
 
 with k4:
-    st.markdown(f"""
-    <div class="metric-card accent-purple" style="padding:0;">
+    st.markdown(f"""<div class="metric-card accent-purple" style="padding:0;">
       <div class="card-header" style="border-top:none;">
         <span class="dot" style="background:{C['purple']};margin-right:4px;"></span>Deal Quality &amp; Trust
-      </div>
-      <div style="padding:4px 16px 8px;">{kpi_block(deal_kpis)}</div>
-    </div>
-    """, unsafe_allow_html=True)
+      </div></div>""", unsafe_allow_html=True)
+    st.markdown(f'<div style="padding:4px 16px 8px;">{kpi_block(deal_kpis)}</div>', unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
